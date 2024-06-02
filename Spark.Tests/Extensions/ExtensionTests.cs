@@ -25,5 +25,17 @@ namespace BlazorSpark.Tests.Extensions
 
             Assert.AreEqual("This...", clampedStr);
         }
+
+        [TestMethod]
+        public void ShouldTitleString()
+        {
+            string input = "this is a string";
+
+            var title = input.Title();
+
+            string expectedTitle = "This Is A String";
+
+            Assert.AreEqual(expectedTitle, title);
+        }
     }
 }
