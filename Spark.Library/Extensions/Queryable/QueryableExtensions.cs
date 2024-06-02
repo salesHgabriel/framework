@@ -65,6 +65,24 @@ namespace Spark.Library.Extensions.Queryable
             return respose;
         }
 
+        /// <summary>
+        /// The when method will execute the given callback when the first argument given to the method evaluates to true.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="conditional"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public static IQueryable<T> When<T>(this IQueryable<T> source, bool conditional, Expression<Func<T, bool>> predicate)
+        {
+            if (conditional)
+            {
+                return source.Where(predicate);
+            }
+            return source;
+        }
+
+
         private static Uri GetPageUri(int page = 1, int limit = 15, string baseUri = "https://localhost/", string route = "/not-found")
         {
             var _enpointUri = new Uri(string.Concat(baseUri, route));
