@@ -194,4 +194,19 @@ public static class StringExtensions
         }
     }
 
+
+    /// <summary>
+    ///  the method converts the given string to Title Case
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns>string</returns>
+    public static string Title(this string text)
+    {
+        string cultureName = CultureInfo.CurrentCulture.Name ?? "en-US";
+
+        var textinfo = new CultureInfo(cultureName, false).TextInfo;
+
+        return textinfo.ToTitleCase(text);
+    }
+
 }
