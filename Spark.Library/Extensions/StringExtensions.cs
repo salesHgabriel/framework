@@ -1,13 +1,7 @@
-﻿using DotNetEnv;
-using Spark.Library.Environment;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Spark.Library.Extensions;
 
@@ -21,6 +15,16 @@ public static class StringExtensions
         if (value != null && Encoding.UTF8.GetByteCount(value) <= maxChars)
         {
             return value;
+        }
+
+        if (value.Length <= maxChars)
+        {
+            return value;
+        }
+
+        if (value.Length >= maxChars)
+        {
+            return string.Concat(value.AsSpan(0, maxChars), end);
         }
 
         string truncated = value != null ? value.Substring(0, maxChars) : "";
