@@ -43,21 +43,20 @@ namespace Spark.Library.Extensions.Queryable
 
                 string url = string.Concat(httpContextAccessor?.HttpContext?.Request.Scheme, "://", httpContextAccessor?.HttpContext?.Request.Host.ToUriComponent());
 
-                // Uri uri = GetPageUri(page, limit, url, route);
 
                 respose.NextPage =
                     page >= 1 && page < roundedTotalPages
-                    ? GetPageUri(page + 1, limit, url, route)
+                    ? GetPageUri(url,page + 1, limit, route)
                     : null;
 
                 respose.PreviousPage =
                     page - 1 >= 1 && page <= roundedTotalPages
-                    ? GetPageUri(page - 1, limit, url, route)
+                    ? GetPageUri(url, page + 1, limit, route)
                     : null;
 
-                respose.FirstPage = GetPageUri(1, limit, url, route);
+                respose.FirstPage = GetPageUri(url, 1, limit, route);
 
-                respose.LastPage = GetPageUri(roundedTotalPages, limit, url, route);
+                respose.LastPage = GetPageUri(url, roundedTotalPages, limit, route);
             }
 
             respose.Total = total;
@@ -83,7 +82,7 @@ namespace Spark.Library.Extensions.Queryable
         }
 
 
-        private static Uri GetPageUri(int page = 1, int limit = 15, string baseUri = "https://localhost/", string route = "/not-found")
+        private static Uri GetPageUri(string baseUri, int page = 1, int limit = 15, string route = "/not-found")
         {
             var _enpointUri = new Uri(string.Concat(baseUri, route));
             var modifiedUri = QueryHelpers.AddQueryString(_enpointUri.ToString(), "page", page.ToString());
