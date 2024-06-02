@@ -1,4 +1,5 @@
 ﻿using DotNetEnv;
+using Spark.Library.Environment;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,9 +16,22 @@ public static class StringExtensions
 
     private static Dictionary<string, Dictionary<string, string>> _snakeCache = new Dictionary<string, Dictionary<string, string>>();
 
-    public static string Clamp(this string value, int maxChars)
+    public static string Clamp(this string value, int maxChars,string end = "...")
     {
-        return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "...";
+        if (value != null && Encoding.UTF8.GetByteCount(value) <= maxChars)
+        {
+            return value;
+        }
+
+        string truncated = value != null ? value.Substring(0, maxChars) : "";
+
+        if (truncated.Length > 0)
+        {
+            truncated = truncated.Remove(truncated.LastIndexOf(" ", StringComparison.Ordinal));
+        }
+
+        return $"{truncated}{end}";
+
     }
 
     public static string ToSlug(this string input)
