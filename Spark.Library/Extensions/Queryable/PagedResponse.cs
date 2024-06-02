@@ -18,7 +18,7 @@ namespace Spark.Library.Extensions.Queryable
         public Uri? NextPage { get; set; }
         public Uri? PreviousPage { get; set; }
 
-        public string Links()
+        public string LinksRazor()
         {
             bool hasNext = NextPage is not null;
 
